@@ -12,8 +12,8 @@ Description=Consul
 Documentation=https://www.consul.io/
 
 [Service]
-ExecStart=/usr/bin/consul agent -server -ui -data-dir=/tmp/consul -bootstrap-expect=1 -node=vault -bind=server=ip/0.0.0.0 -enable-script-checks -config-dir=/etc/consul.d
-ExecReload=/usr/bin/consul reload
+ExecStart=/usr/local/bin/consul agent -server -ui -data-dir=/tmp/consul -bootstrap-expect=1 -node=vault -enable-script-checks -config-dir=/etc/consul.d
+ExecReload=/usr/local/bin/consul reload
 KillMode=process
 Restart=on-failure
 LimitNOFILE=65536
