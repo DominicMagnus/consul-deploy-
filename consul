@@ -113,3 +113,32 @@ sudo nano /etc/consul.d/web.json
 consul reload
 
 # Reloads the Consul agent's configuration to apply any changes made to the configuration files.
+
+# make autostart
+sudo nano /etc/systemd/system/consul.service
+
+[Unit]
+Description=Consul
+Documentation=https://www.consul.io/
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+User=<username>  # Replace <username> with the username of the user running Consul
+Group=<group>    # Replace <group> with the group of the user running Consul
+ExecStart=/usr/bin/consul agent -dev -enable-script-checks -config-dir=/etc/consul.d
+ExecReload=/usr/bin/consul reload
+KillMode=process
+Restart=on-failure
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+
+sudo systemctl enable consul.service
+sudo systemctl start consul.service
+sudo systemctl status consul.service
+
+
+
+
