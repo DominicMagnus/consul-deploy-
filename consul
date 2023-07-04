@@ -93,18 +93,13 @@ sudo nano /etc/consul.d/web.json
 
 {
   "service": {
-    "id": "jenkins-server",
-    "name": "jenkins",
-    "address": "192.168.0.100",
-    "port": 8080,
-    "checks": [
-      {
-        "id": "http-check",
-        "name": "HTTP Check",
-        "http": "http://192.168.0.100:8080/",
-        "interval": "10s"
-      }
-    ]
+    "name": "web",
+    "tags": ["frontend"],
+    "port": 80,
+    "check": {
+      "args": ["curl", "localhost"],
+      "interval": "10s"
+    }
   }
 }
 
