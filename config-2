@@ -1,1 +1,19 @@
-#
+
+wget https://releases.hashicorp.com/consul/1.16.0/consul_1.16.0_linux_amd64.zip
+unzip consul_1.16.0_linux_amd64.zip
+sudo mv consul /usr/local/bin
+
+
+[Unit]
+Description=Consul
+Documentation=https://www.consul.io/
+
+[Service]
+ExecStart=/usr/bin/consul agent -dev -enable-script-checks -config-dir=/etc/consul.d
+ExecReload=/usr/bin/consul reload
+KillMode=process
+Restart=on-failure
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
