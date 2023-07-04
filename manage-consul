@@ -2,3 +2,6 @@ sudo systemctl status consul.service
 sudo systemctl start consul.service
 
 sudo journalctl -u consul.service
+
+systemctl daemon-reload
+sudo systemctl restart consul
