@@ -92,18 +92,20 @@ sudo nano /etc/consul.d/web.json
 # Opens the "web.json" configuration file for editing using the nano text editor with superuser privileges.
 
 {
-  "id": "jenkins-server",
-  "name": "jenkins",
-  "address": "192.168.0.100",
-  "port": 8080,
-  "checks": [
-    {
-      "id": "http-check",
-      "name": "HTTP Check",
-      "http": "http://192.168.0.100:8080/",
-      "interval": "10s"
-    }
-  ]
+  "service": {
+    "id": "jenkins-server",
+    "name": "jenkins",
+    "address": "192.168.0.100",
+    "port": 8080,
+    "checks": [
+      {
+        "id": "http-check",
+        "name": "HTTP Check",
+        "http": "http://192.168.0.100:8080/",
+        "interval": "10s"
+      }
+    ]
+  }
 }
 
 # Adds a Consul service configuration for a Jenkins server with the specified address, port, and HTTP health check.
