@@ -12,7 +12,7 @@ Description=Consul
 Documentation=https://www.consul.io/
 
 [Service]
-ExecStart=/usr/bin/consul agent -dev -enable-script-checks -config-dir=/etc/consul.d
+ExecStart=/usr/bin/consul agent -server -ui -data-dir=/tmp/consul -bootstrap-expect=1 -node=vault -bind=server=ip/0.0.0.0 -enable-script-checks -config-dir=/etc/consul.d
 ExecReload=/usr/bin/consul reload
 KillMode=process
 Restart=on-failure
@@ -21,7 +21,16 @@ LimitNOFILE=65536
 [Install]
 WantedBy=multi-user.target
 
+mkdir /etc/consul.d
+sudo nano /etc/consul.d/ui.json
 
+{
+  "addresses": {
+    "http": "0.0.0.0"
+  }
+}
+
+systemctl daemon-reload
 sudo systemctl enable consul.service
 sudo systemctl start consul.service
 sudo systemctl status consul.service
