@@ -31,6 +31,6 @@ sudo nano /etc/consul.d/ui.json
 }
 
 systemctl daemon-reload
-sudo systemctl enable consul.service
-sudo systemctl start consul.service
-sudo systemctl status consul.service
+sudo systemctl enable consul
+sudo systemctl start consul
+sudo systemctl status consul
