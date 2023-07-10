@@ -1,4 +1,6 @@
 sudo apt update && sudo apt install -y consul
+consul --version
+# OLD VERSION Consul v1.8.7!!!!!!
 
 sudo nano /etc/systemd/system/consul.service
 
