@@ -65,6 +65,32 @@ network:
 # check ip
   ip a
 
+### Step 3 
 
+# On the first server run
+Consul keygen
 
- 
+# save output, ex. "zyjCKPRjemm*(aOSHn8EZ+asdasdASDvIgQEmzs3u4OuK"
+# It's your keygen for all servers
+
+# edit config (repeat for all servers)
+
+sudo nano /etc/consul.d/config.json
+
+{
+  "datacenter": "Academy-datacenter",
+  "node_name": "node1",
+  "server": true,
+  "bootstrap_expect": 3,
+  "ui": true,
+  "data_dir": "/usr/local/bin/consul",
+  "bind_addr": "192.168.0.10",
+  "client_addr": "0.0.0.0",
+  "retry_join": ["192.168.0.11", #second server
+                "192.168.0.12"],
+  "encrypt": "zyjCKPRjemm*(aOSHn8EZ+asdasdASDvIgQEmzs3u4OuK"
+}
+sudo systemctl restart consul
+
+# After all reboot all servers and check status
+consul members
