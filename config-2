@@ -24,7 +24,7 @@ LimitNOFILE=65536
 [Install]
 WantedBy=multi-user.target
 
-mkdir /etc/consul.d
+sudo mkdir /etc/consul.d
 sudo nano /etc/consul.d/ui.json
 
 {
