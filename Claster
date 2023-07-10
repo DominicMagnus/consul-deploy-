@@ -1,0 +1,70 @@
+
+wget https://releases.hashicorp.com/consul/1.16.0/consul_1.16.0_linux_amd64.zip
+
+sudo apt update && sudo apt install -y  unzip
+
+unzip consul_1.16.0_linux_amd64.zip
+sudo mv consul /usr/local/bin
+
+# make autostart
+sudo nano /etc/systemd/system/consul.service
+
+[Unit]
+Description=Consul
+Documentation=https://www.consul.io/
+
+#### set -node parameter unic for each server !!! ex.(node1,node2,node3)
+  
+[Service]
+ExecStart=/usr/local/bin/consul agent -server -ui -data-dir=/tmp/consul -bootstrap-expect=1 -node=node1 -enable-script-checks -config-dir=/etc/consul.d
+ExecReload=/usr/local/bin/consul reload
+KillMode=process
+Restart=on-failure
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+
+sudo mkdir /etc/consul.d
+sudo nano /etc/consul.d/ui.json
+
+{
+  "addresses": {
+    "http": "0.0.0.0"
+  }
+}
+
+systemctl daemon-reload
+sudo systemctl enable consul
+sudo systemctl start consul
+sudo systemctl status consul
+
+# After a successful start, proceed to next step
+
+### Step 2 
+# Make static-IP for each server
+
+sudo nano /etc/netplan/your-file.yaml
+
+# server 1
+
+network:
+  version: 2
+  ethernets:
+    ens18:
+      dhcp4: no
+      addresses: [192.168.0.10/24]
+      gateway4: 192.168.0.1
+      nameservers:
+        addresses: [192.168.0.1]
+# end of file
+  
+# execute command
+  sudo netplan apply
+
+# check ip
+  ip a
+
+
+
+ 
